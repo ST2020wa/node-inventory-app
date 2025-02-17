@@ -1,0 +1,35 @@
+# Node modules
+/node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Build output
+/dist/
+build/
+
+# Environment variables
+/.env
+
+# Angular specific
+/.angular/
+
+# VS Code settings
+.vscode/
+
+# Dependency directories
+/.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Angular test results
+/coverage/
+
+# Tye build files
+/.angular-cli.json

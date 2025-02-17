@@ -1,0 +1,32 @@
+<div class="app-container">
+  <!-- Header Section -->
+  <header class="app-header">
+    <h1 class="title">Inventory Management</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Settings</a>
+      <a href="#">Logout</a>
+    </nav>
+  </header>
+  <!-- Main Content Section -->
+  <main class="content">
+    <div class="card">
+      <h2 class="card-title">Inventory List</h2>
+      <div class="inventory-items">
+        <div class="item" *ngFor="let item of inventoryData">
+          <div class="item-details">
+            <h3 class="item-name">{{ item.item_name }}</h3>
+            <p class="item-category">Category: {{ item.item_categories }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- <div *ngIf="inventoryData.length === 0">
+  <p>No inventory data available.</p>
+</div>
+<div *ngIf="!!inventoryData">
+  <p>oops!</p>
+</div> -->

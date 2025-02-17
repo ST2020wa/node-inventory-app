@@ -5,11 +5,11 @@
 
    const app = express();
    const PORT = process.env.PORT || 3000;
-   // Middleware to parse form data (x-www-form-urlencoded)
-app.use(express.urlencoded({ extended: true }));
+   const cors = require('cors');
 
-// Middleware to parse JSON (if needed for API requests)
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
    // Set up Sequelize to connect to PostgreSQL
    const sequelize = new Sequelize('inventory', 'postgres', 'postgres', {
@@ -73,19 +73,33 @@ app.get('/allitems', async (req, res) => {
             <input type="text" name="name" required>
             <button type="submit">Submit</button>
         </form>
-                <form action="/newitem" method="POST">
+        <form action="/newitem" method="POST">
             <label for="items">Add new item:</label>
             <input type="text" name="name" required>
+            <label for="categories">category:</label>
+            <input type="text" name="category" required>
             <button type="submit">Submit</button>
         </form>
     `);
 });
 
 app.post('/newcategory', async (req, res) => {
-  console.log(req);
   const { name } = req.body;
   try {
       const result = await pool.query('INSERT INTO categories (name) VALUES ($1) RETURNING *', [name]);
+      res.send(`Category saved: ${result.rows[0].name}`);
+  } catch (error) {
+      console.error('Error saving category:', error);
+      res.status(500).send('Error saving category');
+  }
+});
+
+app.post('/newitem', async (req, res) => {
+  const { name, category } = req.body;
+  console.log(name, category)
+  try {
+    //add new category OR use current -> better use selector for category and make add category a new UI
+      const result = await pool.query('INSERT INTO items (name) VALUES ($1) RETURNING *', [name]);
       res.send(`Category saved: ${result.rows[0].name}`);
   } catch (error) {
       console.error('Error saving category:', error);
