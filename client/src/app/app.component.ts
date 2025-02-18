@@ -2,30 +2,42 @@ import { Component,OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { InventoryService } from './inventory.service';
 import { CommonModule } from '@angular/common';
+import { CategoriesComponent } from './categories/categories.component';
+import { ItemsComponent } from './items/items.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule,CategoriesComponent, ItemsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [InventoryService]
 })
 
 export class AppComponent implements OnInit {
-  title = 'client';
-  inventoryData: any[] = [];
-  currentView: string = 'item'; // Default view is 'item'
+  public title = 'Inventory App';
+  public inventoryData: any[] = [];
+  public categoryData: any[]=[];
+  public currentView: string = 'item';
+  public showCategory= false;
 
   constructor(private inventoryService: InventoryService) {}
 
   ngOnInit() {
-    this.inventoryService.getData().subscribe(
+    this.inventoryService.getItems().subscribe(
       (data) => {
         this.inventoryData = data;
-        console.log(data);
       },
       (error) => {
-        console.error('Error fetching inventory data:', error);
+        console.error('Error fetching inventory items:', error);
+      }
+    );
+    this.inventoryService.getCategories().subscribe(
+      (data) => {
+        this.categoryData = data;
+      },
+      (error) => {
+        console.error('Error fetching inventory categories:', error);
       }
     );
   }  

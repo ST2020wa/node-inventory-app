@@ -11,7 +11,10 @@ export class InventoryService {
   constructor(private http: HttpClient) {}
 
   // Method to fetch data from the backend
-  getData(): Observable<any> {
+  public getItems(): Observable<any> {
     return this.http.get(`${this.apiUrl}/allitems`);
+  }
+  public getCategories(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/allCategories`);
   }
 }
