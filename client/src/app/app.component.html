@@ -3,8 +3,8 @@
   <header class="app-header">
     <h1 class="title">Inventory Management</h1>
     <nav>
-      <a href="#" (click)="showCategory=true">Categories</a>
-      <a href="#" (click)="showCategory=false">Items</a>
+      <a href="#" (click)="showCategory=true;showDialog=false">Categories</a>
+      <a href="#" (click)="showCategory=false;showDialog=false">Items</a>
       <a href="#">Settings</a>
       <a href="#">Logout</a>
     </nav>
@@ -14,7 +14,7 @@
     <div class="card">
       <div class="title-block">
         <h2 class="card-title">{{showCategory ? 'Category List':'Inventory List'}}</h2>
-        <button>+</button>
+        <button (click)="showDialog=true">+</button>
       </div>
       <div class="inventory-items">
         <app-items [hidden]="showCategory" [itemData]="inventoryData"></app-items>
@@ -23,3 +23,5 @@
     </div>
   </main>
 </div>
+
+<app-dialog [hidden]="!showDialog" [newCategory]="showCategory" (addCategoryEvent)="onAddCategory($event)"></app-dialog>

@@ -5,10 +5,11 @@ import { CommonModule } from '@angular/common';
 import { CategoriesComponent } from './categories/categories.component';
 import { ItemsComponent } from './items/items.component';
 import { SettingsComponent } from './settings/settings.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule,CategoriesComponent, ItemsComponent],
+  imports: [RouterOutlet, CommonModule,CategoriesComponent, ItemsComponent, DialogComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [InventoryService]
@@ -20,10 +21,11 @@ export class AppComponent implements OnInit {
   public categoryData: any[]=[];
   public currentView: string = 'item';
   public showCategory= false;
+  public showDialog=false;
 
   constructor(private inventoryService: InventoryService) {}
 
-  ngOnInit() {
+  public ngOnInit() {
     this.inventoryService.getItems().subscribe(
       (data) => {
         this.inventoryData = data;
@@ -42,7 +44,11 @@ export class AppComponent implements OnInit {
     );
   }  
 
-  onViewChange(view: string) {
+  public onViewChange(view: string) {
     this.currentView = view;
+  }
+
+  public onAddCategory(newCategoryName: string){
+    this.inventoryService.addCategory(newCategoryName);
   }
 }

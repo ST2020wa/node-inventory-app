@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +16,26 @@ export class InventoryService {
   }
   public getCategories(): Observable<any> {
     return this.http.get(`${this.apiUrl}/allCategories`);
+  }
+  public addCategory(categoryName: string): Observable<any> {
+    const body = { name: categoryName };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    }); 
+    this.http.post(`${this.apiUrl}/newcategory`, body, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error adding category:', error);
+        return throwError(() => new Error('Error adding category'));
+      })
+    ).subscribe({
+      next: (response) => {
+        console.log('Category added successfully:', response);
+      },
+      error: (error) => {
+        console.error('Error during POST request:', error);
+      }
+    });
+  // TODO: refresh UI somewhere so that user get to know the add success
+    return this.http.post(`${this.apiUrl}/newcategory`, body, { headers });
   }
 }

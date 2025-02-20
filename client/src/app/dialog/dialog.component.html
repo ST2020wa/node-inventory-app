@@ -1,0 +1,13 @@
+<div class="new-category" [hidden]="!newCategory">
+<label for="categories">Add new category:</label>
+<input type="text" name="name" required #categoryInput>
+<button type="submit" (click)="addCategory(categoryInput.value)">Submit</button>
+</div>
+
+<div class="new-item" [hidden]="newCategory">
+    <label for="items">Add new item:</label>
+    <input type="text" name="name" required>
+    <label for="categories">category:</label>
+    <input type="text" name="category" required>
+    <button type="submit" (click)="addItem()">Submit</button>
+</div>

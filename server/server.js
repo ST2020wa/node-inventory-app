@@ -85,9 +85,10 @@ app.get('/allitems', async (req, res) => {
 
 app.post('/newcategory', async (req, res) => {
   const { name } = req.body;
+  console.log(name);
   try {
       const result = await pool.query('INSERT INTO categories (name) VALUES ($1) RETURNING *', [name]);
-      res.send(`Category saved: ${result.rows[0].name}`);
+      res.json({ message: `Category saved: ${result.rows[0].name}`, data: result.rows[0] });
   } catch (error) {
       console.error('Error saving category:', error);
       res.status(500).send('Error saving category');
