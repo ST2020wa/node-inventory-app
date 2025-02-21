@@ -85,13 +85,36 @@ app.get('/allitems', async (req, res) => {
 
 app.post('/newcategory', async (req, res) => {
   const { name } = req.body;
-  console.log(name);
   try {
       const result = await pool.query('INSERT INTO categories (name) VALUES ($1) RETURNING *', [name]);
       res.json({ message: `Category saved: ${result.rows[0].name}`, data: result.rows[0] });
   } catch (error) {
       console.error('Error saving category:', error);
       res.status(500).send('Error saving category');
+  }
+});
+
+app.delete('/delcategory', async (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ message: 'Category name is required' });
+  }
+
+  try {
+    // TODO: First delete associated items (if you have foreign key constraints)
+    // await pool.query('DELETE FROM items WHERE category_id = (SELECT id FROM categories WHERE name = $1)', [name]);
+    // Then delete the category
+    const result = await pool.query('DELETE FROM categories WHERE name = $1 RETURNING *', [name]);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
+    res.json({ 
+      message: 'Category deleted successfully',
+      deletedCategory: result.rows[0]
+    });
+  } catch (error) {
+    console.error('Error deleting category:', error);
+    res.status(500).json({ message: 'Error deleting category' });
   }
 });
 

@@ -1,0 +1,17 @@
+.auto-width-select {
+    width: auto;
+    min-width: 120px;
+  }
+  
+  .no-wrap-option {
+    white-space: nowrap;
+  }
+  
+  ::ng-deep .ant-select-dropdown {
+    width: auto !important;
+    min-width: 100%;
+  }
+  
+  ::ng-deep .ant-select-selection-item {
+    white-space: nowrap;
+  }

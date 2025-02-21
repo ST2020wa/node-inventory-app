@@ -19,6 +19,7 @@
   .app-header .title {
     font-size: 24px;
     font-weight: bold;
+    color: white;
   }
   
   .app-header nav a {

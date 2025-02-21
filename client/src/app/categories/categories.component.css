@@ -1,0 +1,5 @@
+h3:hover {
+    cursor: pointer;
+    text-decoration: line-through;
+    color: darkred;
+  }

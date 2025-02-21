@@ -8,6 +8,20 @@
     <label for="items">Add new item:</label>
     <input type="text" name="name" required>
     <label for="categories">category:</label>
-    <input type="text" name="category" required>
+    <!-- <input type="text" name="category" required>
+    <label for="categories">category:</label> -->
+<nz-select 
+  [(ngModel)]="selectedCategory" 
+  name="category" 
+  required
+  [nzDropdownMatchSelectWidth]="false"
+  class="auto-width-select">
+  <nz-option 
+    *ngFor="let category of categoryData" 
+    [nzValue]="category.id" 
+    [nzLabel]="category.name"
+    class="no-wrap-option">
+  </nz-option>
+</nz-select>
     <button type="submit" (click)="addItem()">Submit</button>
 </div>
