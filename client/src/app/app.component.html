@@ -17,11 +17,11 @@
         <button (click)="showDialog=true">+</button>
       </div>
       <div class="inventory-items">
-        <app-items [hidden]="showCategory" [itemData]="inventoryData"></app-items>
+        <app-items [hidden]="showCategory" [itemData]="itemData"></app-items>
         <app-categories [hidden]="!showCategory" [categoryData]="categoryData"></app-categories>
       </div>
     </div>
   </main>
 </div>
 
-<app-dialog [hidden]="!showDialog" [newCategory]="showCategory" (addCategoryEvent)="onAddCategory($event)" [categoryData]="categoryData"></app-dialog>
+<app-dialog [hidden]="!showDialog" [newCategory]="showCategory" [categoryData]="categoryData" (addCategoryEvent)="onAddCategory($event)" (addItemEvent)="onAddItem($event)"></app-dialog>

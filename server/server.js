@@ -46,10 +46,24 @@ app.use(cors());
     }
    })
 
-app.get('/allitems', async (req, res) => {
+   app.get('/allitems', async (req, res) => {
     try {
-      const result = await pool.query('SELECT * FROM items');
-      res.json(result.rows);
+      const result = await pool.query(`
+        SELECT 
+          items.id,
+          items.item_name AS name,
+          categories.name AS category_name
+        FROM items
+        JOIN categories ON items.item_categories = categories.id
+      `);
+      
+      const transformedItems = result.rows.map(item => ({
+        id: item.id,
+        name: item.name,
+        categoryName: item.category_name // Now using category name instead of ID
+      }));
+      
+      res.json(transformedItems);
     } catch (err) {
       console.error(err);
       res.status(500).send('Server error');
@@ -94,6 +108,20 @@ app.post('/newcategory', async (req, res) => {
   }
 });
 
+app.post('/newitem', async (req, res) => {
+  const { name, category } = req.body;
+  try {
+      const result = await pool.query('INSERT INTO items (name, category) VALUES ($1, $2) RETURNING *', [name,category]);
+      res.json({ 
+        message: 'Item saved successfully',
+        savedItem: result.rows[0]
+      });
+  } catch (error) {
+      console.error('Error saving category:', error);
+      res.status(500).send('Error saving category');
+  }
+});
+
 app.delete('/delcategory', async (req, res) => {
   const { name } = req.body;
   if (!name) {
@@ -115,19 +143,6 @@ app.delete('/delcategory', async (req, res) => {
   } catch (error) {
     console.error('Error deleting category:', error);
     res.status(500).json({ message: 'Error deleting category' });
-  }
-});
-
-app.post('/newitem', async (req, res) => {
-  const { name, category } = req.body;
-  console.log(name, category)
-  try {
-    //add new category OR use current -> better use selector for category and make add category a new UI
-      const result = await pool.query('INSERT INTO items (name) VALUES ($1) RETURNING *', [name]);
-      res.send(`Category saved: ${result.rows[0].name}`);
-  } catch (error) {
-      console.error('Error saving category:', error);
-      res.status(500).send('Error saving category');
   }
 });
 

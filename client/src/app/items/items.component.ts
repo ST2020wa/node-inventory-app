@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component,Input } from '@angular/core';
+import { Item } from '../inventory.service';
 
 @Component({
   selector: 'app-items',
@@ -8,5 +9,5 @@ import { Component,Input } from '@angular/core';
   styleUrl: './items.component.css'
 })
 export class ItemsComponent {
-  @Input() itemData:any[]=[];
+  @Input() itemData:Item[]=[];
 }
