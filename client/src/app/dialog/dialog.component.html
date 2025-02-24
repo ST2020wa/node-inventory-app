@@ -13,7 +13,7 @@
   name="category" 
   required
   [nzDropdownMatchSelectWidth]="false"
-  class="auto-width-select">
+  class="auto-width-select">`
   <nz-option 
     *ngFor="let category of categoryData" 
     [nzValue]="category.id" 
@@ -21,5 +21,5 @@
     class="no-wrap-option">
   </nz-option>
 </nz-select>
-    <button type="submit" (click)="addItem(itemInput.value)">Submit</button>
+    <button type="submit" (click)="addItem(itemInput)">Submit</button>
 </div>

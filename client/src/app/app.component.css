@@ -20,19 +20,30 @@
     font-size: 24px;
     font-weight: bold;
     color: white;
+    margin: 0;
+  }
+
+  .app-header nav {
+    display: flex;
   }
   
   .app-header nav a {
-    color: white;
+    color: #f0f0f0;
     margin-left: 20px;
     text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s ease;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
   }
   
   .app-header nav a:hover {
     color: #f39c12;
+    border-color: #f39c12;
   }
+  
   
   /* Main Content Section */
   .content {
@@ -54,9 +65,38 @@
       justify-content: space-between;
     }
   }
+
+
+.card .title-block button {
+  color: white;
+  font-weight: bolder;
+  border: none;
+  border-radius: 24px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
   
   .card-title {
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 20px;
+  }
+
+  .add-button {
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f39c12;
+    border-color: #f39c12;
+    transition: all 0.3s ease;
+  }
+  
+  .add-button:hover {
+    background-color: #e67e22;
+    border-color: #e67e22;
+    transform: scale(1.1);
   }

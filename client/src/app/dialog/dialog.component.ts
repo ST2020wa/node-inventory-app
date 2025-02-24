@@ -27,7 +27,8 @@ export class DialogComponent {
     this.addCategoryEvent.emit(categoryName);
   }
 
-  public addItem(itemName: string) {
+  public addItem(itemInput: HTMLInputElement) {
+    let itemName = itemInput.value;
     if (!this.itemCategory || !itemName) {
       console.error('Both category and item name are required');
       return;
@@ -36,6 +37,7 @@ export class DialogComponent {
       fkCategory: this.itemCategory,
       name: itemName
     });
-    this.itemCategory = 0;
+    this.itemCategory = undefined;
+    itemInput.value = '';
   }
 }

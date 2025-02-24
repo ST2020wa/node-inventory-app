@@ -3,9 +3,9 @@
   <header class="app-header">
     <h1 class="title">Inventory Management</h1>
     <nav>
-      <a href="#" (click)="showCategory=true;showDialog=false">Categories</a>
       <a href="#" (click)="showCategory=false;showDialog=false">Items</a>
-      <a href="#">Settings</a>
+      <a href="#" (click)="showCategory=true;showDialog=false">Categories</a>
+      <a href="#" (click)="showQuickStart=true">Get Started</a>
       <a href="#">Logout</a>
     </nav>
   </header>
@@ -14,11 +14,18 @@
     <div class="card">
       <div class="title-block">
         <h2 class="card-title">{{showCategory ? 'Category List':'Inventory List'}}</h2>
-        <button (click)="showDialog=true">+</button>
+        <button nz-button 
+        nzType="primary" 
+        nzShape="circle" 
+        (click)="showDialog=true"
+        class="add-button">
+  <span nz-icon nzType="plus">+</span>
+</button>
       </div>
       <div class="inventory-items">
         <app-items [hidden]="showCategory" [itemData]="itemData" (itemToHandle)="onRemoveItem($event)"></app-items>
         <app-categories [hidden]="!showCategory" [categoryData]="categoryData" (categoryToHandle)="onRemoveCategory($event)"></app-categories>
+        <app-quickStart [hidden]="!showQuickStart"></app-quickStart>      
       </div>
     </div>
   </main>

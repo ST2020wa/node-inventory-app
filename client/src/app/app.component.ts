@@ -4,13 +4,14 @@ import { InventoryService, Item } from './inventory.service';
 import { CommonModule } from '@angular/common';
 import { CategoriesComponent, Category } from './categories/categories.component';
 import { ItemsComponent } from './items/items.component';
-import { SettingsComponent } from './settings/settings.component';
+import { QuickStartComponent } from './quickStart/quickStart.component';
 import { DialogComponent, newItem } from './dialog/dialog.component';
 import { Observable } from 'rxjs';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule,CategoriesComponent, ItemsComponent, DialogComponent],
+  imports: [RouterOutlet, CommonModule,CategoriesComponent, ItemsComponent, DialogComponent, QuickStartComponent, NzButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [InventoryService]
@@ -23,6 +24,7 @@ export class AppComponent implements OnInit {
   public currentView: string = 'item';
   public showCategory= false;
   public showDialog=false;
+  public showQuickStart=false;
   public categoryData$: Observable<any>;
 
   constructor(private inventoryService: InventoryService) {

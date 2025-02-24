@@ -126,12 +126,8 @@ app.delete('/deletecategory', async (req, res) => {
   if (!name) {
     return res.status(400).json({ message: 'Category name is required' });
   }
-
   try {
-    // TODO: First delete associated items (if you have foreign key constraints)
-    // await pool.query('DELETE FROM items WHERE category_id = (SELECT id FROM categories WHERE name = $1)', [name]);
-    // Then delete the category
-    const result = await pool.query('DELETE FROM categories WHERE name = $1 RETURNING *', [name]);
+    const result = await pool.query('DELETE FROM categories WHERE name = $1 RETURNING *', [name])
     if (result.rowCount === 0) {
       return res.status(404).json({ message: 'Category not found' });
     }
@@ -140,8 +136,16 @@ app.delete('/deletecategory', async (req, res) => {
       deletedCategory: result.rows[0]
     });
   } catch (error) {
-    console.error('Error deleting category:', error);
-    res.status(500).json({ message: 'Error deleting category' });
+    // Check if the error code is for foreign key violation
+    if(error.code === '23503'){
+      res.status(400).json({
+        message: `Cannot delete category. It is still referenced by some items.`,
+        error: error.detail
+      })
+    }else{
+      console.error('Error deleting category:', error);
+      res.status(500).json({ message: 'An error occurred while deleting the category', error: error.message });
+    }
   }
 });
 

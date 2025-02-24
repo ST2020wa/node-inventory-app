@@ -52,8 +52,12 @@ export class InventoryService {
         this.categoryRemovedSubject.next();
       },
       error: (error) => {
-        console.error('Error during DELETE category request:', error);
-      }
+        if (error.status === 400 && error.error.message.includes('referenced by some items')) {
+          this.showErrorDialog('Cannot delete the category. It is still referenced by items.');
+        } else {
+          this.showErrorDialog('An error occurred while deleting the category.');
+        }
+            }
     });
     return this.http.delete(`${this.apiUrl}/deletecategory`, options);
   }
@@ -65,7 +69,10 @@ export class InventoryService {
       body: body
     }; 
     this.http.delete(`${this.apiUrl}/deleteItem`, options).pipe(
-      //
+      catchError((error) => {
+        console.error('Error deleting item:', error);
+        return throwError(() => new Error('Error deleting item'));
+      })
     ).subscribe({
       next: (response)=>{
         console.log('Item removed successfully: ', response);
@@ -76,6 +83,10 @@ export class InventoryService {
       }
     });
     return this.http.delete(`${this.apiUrl}/deleteItem`, options);
+  }
+
+  public showErrorDialog(message: string) {
+    alert(message); 
   }
 
   public addCategory(categoryName: string): Observable<any> {
