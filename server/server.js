@@ -35,17 +35,6 @@ app.use(cors());
    CRUD:Create/Read/Update/Delete
    */
 
-   app.post('/item',async (req, res)=>{
-    const { newCategory } = req.body;
-    try {
-        const result = await pool.query('INSERT INTO items (item_name) VALUES ($1) RETURNING *', [newCategory]);
-        res.send(`Username saved: ${result.rows[0].category_name}`);
-    } catch (error) {
-        console.error('Error saving username:', error);
-        res.status(500).send('Error saving username');
-    }
-   })
-
    app.get('/allitems', async (req, res) => {
     try {
       const result = await pool.query(`
@@ -109,16 +98,26 @@ app.post('/newcategory', async (req, res) => {
 });
 
 app.post('/newitem', async (req, res) => {
-  const { name, category } = req.body;
+  const { item_name, item_categories } = req.body;
+    // Input validation
+    if (!item_name || !item_categories) {
+      console.log(item_name, item_categories)
+      return res.status(400).json({ 
+        message: 'Both item_name and item_category are required' 
+      });
+    }
   try {
-      const result = await pool.query('INSERT INTO items (name, category) VALUES ($1, $2) RETURNING *', [name,category]);
+      const result = await pool.query('INSERT INTO items (item_name, item_categories) VALUES ($1, $2) RETURNING *', [item_name,item_categories]);
       res.json({ 
         message: 'Item saved successfully',
         savedItem: result.rows[0]
       });
   } catch (error) {
-      console.error('Error saving category:', error);
-      res.status(500).send('Error saving category');
+    console.error('Error saving item:', error);
+    res.status(500).json({ 
+      message: 'Error saving item',
+      error: error.message
+    });
   }
 });
 

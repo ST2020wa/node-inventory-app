@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
     this.inventoryService.deleteCategory(categoryToRemove);
   }
 
-  public onAddItem(itemToAdd:newItem){
+  public onAddItem(itemToAdd:newItem){    
     this.inventoryService.addItem(itemToAdd);
   }
 }
