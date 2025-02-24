@@ -121,7 +121,7 @@ app.post('/newitem', async (req, res) => {
   }
 });
 
-app.delete('/delcategory', async (req, res) => {
+app.delete('/deletecategory', async (req, res) => {
   const { name } = req.body;
   if (!name) {
     return res.status(400).json({ message: 'Category name is required' });
@@ -142,6 +142,26 @@ app.delete('/delcategory', async (req, res) => {
   } catch (error) {
     console.error('Error deleting category:', error);
     res.status(500).json({ message: 'Error deleting category' });
+  }
+});
+
+app.delete('/deleteItem', async(req,res)=>{
+  const {id} = req.body;
+  if(!id){
+    return res.status(400).json({message: 'Item id is required'});
+  }
+  try {
+    const result = await pool.query('DELETE FROM items WHERE id = $1 RETURNING *', [id]);
+    if(result.rowCount === 0){
+      return res.status(404).json({message: 'Item not found'});
+    }
+    res.json({
+      message: 'Item deleted successfully',
+      deletedItem: result.rows[0]
+    });
+  } catch (error){
+    console.error('Error deleting item: ', error);
+    res.status(500).json({message: 'Error deleting item'});
   }
 });
 

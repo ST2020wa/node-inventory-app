@@ -32,10 +32,21 @@ export class AppComponent implements OnInit {
     });
     this.inventoryService.categoryRemoved$.subscribe(()=>{
       this.getCategories();
-    })
+    });
+    this.inventoryService.itemAdded$.subscribe(()=>{
+      this.getItems();
+    });
+    this.inventoryService.itemRemoved$.subscribe(()=>{
+      this.getItems();
+    });
   }
 
   public ngOnInit() {
+    this.getItems();
+    this.getCategories();
+  }
+
+  private getItems(){
     this.inventoryService.getItems().subscribe(
       (data) => {
         this.itemData = data;
@@ -44,7 +55,6 @@ export class AppComponent implements OnInit {
         console.error('Error fetching inventory items:', error);
       }
     );
-    this.getCategories();
   }
   
   private getCategories(){
@@ -68,9 +78,13 @@ export class AppComponent implements OnInit {
 
   public onRemoveCategory(categoryToRemove: string){
     this.inventoryService.deleteCategory(categoryToRemove);
-  }
+  };
 
   public onAddItem(itemToAdd:newItem){    
     this.inventoryService.addItem(itemToAdd);
+  }
+
+  public onRemoveItem(itemToRemove: string){
+    this.inventoryService.deleteItem(itemToRemove);
   }
 }

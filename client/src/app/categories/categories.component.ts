@@ -16,7 +16,7 @@ export class CategoriesComponent {
   @Input() categoryData:Category[]=[];
   @Output() categoryToHandle = new EventEmitter<string>();
 
-  public onCategoryNameClick($event: MouseEvent): void {
+  public onCategoryNameClick($event: MouseEvent): void {    
     const target = $event.target as HTMLElement;
     if(target.textContent){
       this.categoryToHandle.emit(target.textContent);

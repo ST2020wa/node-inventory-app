@@ -1,5 +1,5 @@
 <div class="item" *ngFor="let item of itemData">
-    <div class="item-details">
+    <div class="item-details" (click)="onItemClick($event)" [attr.data-item-id]="item.id">
       <h3 class="item-name">{{ item.name }}</h3>
       <p class="item-category">Category: {{ item.categoryName }}</p>
     </div>

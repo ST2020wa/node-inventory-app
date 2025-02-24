@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component,Input } from '@angular/core';
+import { Component,EventEmitter,Input, Output } from '@angular/core';
 import { Item } from '../inventory.service';
 
 @Component({
@@ -10,4 +10,14 @@ import { Item } from '../inventory.service';
 })
 export class ItemsComponent {
   @Input() itemData:Item[]=[];
+  @Output() itemToHandle = new EventEmitter<string>();
+
+  public onItemClick($event: MouseEvent): void {    
+    const target = $event.target as HTMLElement;
+    const itemDetailsDiv = target.closest('.item-details') as HTMLElement;
+    if (itemDetailsDiv) {
+        const itemId = itemDetailsDiv.dataset['itemId'];
+        this.itemToHandle.emit(itemId);
+    }
+  }
 }

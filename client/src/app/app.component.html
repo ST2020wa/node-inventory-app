@@ -17,8 +17,8 @@
         <button (click)="showDialog=true">+</button>
       </div>
       <div class="inventory-items">
-        <app-items [hidden]="showCategory" [itemData]="itemData"></app-items>
-        <app-categories [hidden]="!showCategory" [categoryData]="categoryData"></app-categories>
+        <app-items [hidden]="showCategory" [itemData]="itemData" (itemToHandle)="onRemoveItem($event)"></app-items>
+        <app-categories [hidden]="!showCategory" [categoryData]="categoryData" (categoryToHandle)="onRemoveCategory($event)"></app-categories>
       </div>
     </div>
   </main>
