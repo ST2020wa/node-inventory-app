@@ -42,6 +42,10 @@
       cursor: pointer;
       text-decoration: line-through;
       background-color: #f3f3f3;
+      color: grey;
+      .item-name {
+        color: grey;
+      }
     }
   }
   
