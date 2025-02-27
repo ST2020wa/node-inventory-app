@@ -5,17 +5,18 @@ import { CommonModule } from '@angular/common';
 import { CategoriesComponent } from './categories/categories.component';
 import { ItemsComponent } from './items/items.component';
 import { QuickStartComponent } from './quickStart/quickStart.component';
-import { DialogComponent, newItem } from './dialog/dialog.component';
+import { AddNewComponent, newItem } from './addNew/addNew.component';
 import { Observable } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule,CategoriesComponent, ItemsComponent, DialogComponent, QuickStartComponent, NzButtonModule],
+  imports: [CommonModule,CategoriesComponent, ItemsComponent, AddNewComponent, QuickStartComponent, NzButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [InventoryService]
 })
+
 
 export class AppComponent implements OnInit {
   public title = 'Inventory App';
@@ -23,9 +24,10 @@ export class AppComponent implements OnInit {
   public categoryData: any[]=[];
   public currentView: string = 'item';
   public showCategory= false;
+  public showItem = false;
   public showDialog=false;
   public showQuickStart=false;
-  public categoryData$: Observable<any>;
+  public categoryData$: Observable<any>
 
   constructor(private inventoryService: InventoryService) {
     this.inventoryService.categoryAdded$.subscribe(() => {
@@ -71,7 +73,7 @@ export class AppComponent implements OnInit {
   }
 
   public onViewChange(view: string) {
-    this.currentView = view;
+    this.currentView = view;    
   }
 
   public onAddCategory(categoryToAdd: string){

@@ -10,12 +10,12 @@ export type newItem = {
 }
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'app-addNew',
   imports: [NzSelectModule, FormsModule, CommonModule],
-  templateUrl: './dialog.component.html',
-  styleUrl: './dialog.component.css'
+  templateUrl: './addNew.component.html',
+  styleUrl: './addNew.component.css'
 })
-export class DialogComponent {
+export class AddNewComponent {
   @Input() public categoryData: Category[] = [];
   @Input() public newCategory = false;
   @Output() public addCategoryEvent = new EventEmitter<string>();

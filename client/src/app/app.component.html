@@ -2,18 +2,24 @@
   <!-- Header Section -->
   <header class="app-header">
     <h1 class="title">Inventory Management</h1>
-    <nav>
+    <!-- <nav>
       <a href="#" (click)="showQuickStart=true">Get Started</a>
       <a href="#" (click)="showCategory=false;showDialog=false">Items</a>
       <a href="#" (click)="showCategory=true;showDialog=false">Categories</a>
       <a href="#">Logout</a>
+    </nav> -->
+    <nav>
+      <a href="#" (click)="onViewChange('quickStart')">Get Started</a>
+      <a href="#" (click)="onViewChange('items')">Items</a>
+      <a href="#" (click)="onViewChange('categories')">Categories</a>
+      <a href="#" (click)="onViewChange('logOut')">Logout</a>
     </nav>
   </header>
   <!-- Main Content Section -->
   <main class="content">
     <div class="card">
       <div class="title-block">
-        <h2 class="card-title">{{showCategory ? 'Category List':'Inventory List'}}</h2>
+        <h2 class="card-title">{{currentView==='categories' ? 'Category List' : currentView==='items' ? 'Inventory List' : 'Welcome to Inventory Management!'}}</h2>
         <button nz-button 
         nzType="primary" 
         nzShape="circle" 
@@ -23,12 +29,13 @@
 </button>
       </div>
       <div class="inventory-items">
-        <app-items [hidden]="showCategory" [itemData]="itemData" (itemToHandle)="onRemoveItem($event)"></app-items>
-        <app-categories [hidden]="!showCategory" [categoryData]="categoryData" (categoryToHandle)="onRemoveCategory($event)"></app-categories>
-        <app-quickStart [hidden]="!showQuickStart"></app-quickStart>      
+        <app-quickStart *ngIf="currentView==='quickStart'"></app-quickStart>
+        <app-items *ngIf="currentView==='items'" [itemData]="itemData" (itemToHandle)="onRemoveItem($event)"></app-items>
+        <app-categories *ngIf="currentView==='categories'" [categoryData]="categoryData" (categoryToHandle)="onRemoveCategory($event)"></app-categories>
+        <app-quickStart *ngIf="currentView==='quickStart'" [hidden]="!showQuickStart"></app-quickStart>      
       </div>
     </div>
   </main>
 </div>
 
-<app-dialog [hidden]="!showDialog" [newCategory]="showCategory" [categoryData]="categoryData" (addCategoryEvent)="onAddCategory($event)" (addItemEvent)="onAddItem($event)"></app-dialog>
+<app-addNew [hidden]="!showDialog" [newCategory]="showCategory" [categoryData]="categoryData" (addCategoryEvent)="onAddCategory($event)" (addItemEvent)="onAddItem($event)"></app-addNew>
