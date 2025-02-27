@@ -8,11 +8,10 @@ import { QuickStartComponent } from './quickStart/quickStart.component';
 import { DialogComponent, newItem } from './dialog/dialog.component';
 import { Observable } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule,CategoriesComponent, ItemsComponent, DialogComponent, QuickStartComponent, NzButtonModule, ConfirmDialogComponent],
+  imports: [RouterOutlet, CommonModule,CategoriesComponent, ItemsComponent, DialogComponent, QuickStartComponent, NzButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [InventoryService]

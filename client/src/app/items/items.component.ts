@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component,EventEmitter,Injectable,Input, Output } from '@angular/core';
 import { Item } from '../inventory.service';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-items',
-  imports: [CommonModule, ConfirmDialogComponent],
+  imports: [CommonModule],
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })
