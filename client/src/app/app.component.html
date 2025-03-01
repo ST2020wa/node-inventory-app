@@ -25,7 +25,8 @@
       <div class="inventory-items">
         <app-quickStart *ngIf="currentView===Views.Start"></app-quickStart>
         <app-items *ngIf="currentView===Views.Item" [itemData]="itemData" (itemToHandle)="onRemoveItem($event)"></app-items>
-        <app-categories *ngIf="currentView===Views.Category" [categoryData]="categoryData" (categoryToHandle)="onRemoveCategory($event)"></app-categories>  
+        <app-categories *ngIf="currentView===Views.Category" [categoryData]="categoryData" (categoryToHandle)="onRemoveCategory($event)"></app-categories> 
+        <div *ngIf="currentView===Views.Logout" style="font-size: 16px;padding:18px;">😃 User profile feature is coming soon!</div>
       </div>
     </div>
   </main>
