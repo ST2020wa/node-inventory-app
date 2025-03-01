@@ -1,0 +1,36 @@
+<div class="dialog-overlay" *ngIf="visible">
+    <div class="dialog">
+      <div class="dialog-header">
+        <h3>{{ title }}</h3>
+        <button class="close-button" (click)="onCancel()">×</button>
+      </div>
+      <div class="dialog-content">
+        <div class="new-item" *ngIf="addItem">
+          <label for="items">Item name: </label>
+          <input type="text" name="name" required #itemInput>
+          <label for="categories">category:</label>
+      <nz-select 
+        [(ngModel)]="itemCategory" 
+        name="category" 
+        required
+        [nzDropdownMatchSelectWidth]="false"
+        class="auto-width-select">`
+        <nz-option 
+          *ngFor="let category of categoryData" 
+          [nzValue]="category.id" 
+          [nzLabel]="category.name"
+          class="no-wrap-option">
+        </nz-option>
+      </nz-select>
+      </div>
+      <div class="new-category" *ngIf="addCategory">
+        <label for="categories">Add new category: </label>
+        <input type="text" name="name" required #categoryInput>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button (click)="onCancel()">Cancel</button>
+        <button (click)="onConfirm()">OK</button>
+      </div>
+    </div>
+  </div>

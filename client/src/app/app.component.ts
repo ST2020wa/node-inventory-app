@@ -8,21 +8,29 @@ import { QuickStartComponent } from './quickStart/quickStart.component';
 import { AddNewComponent, newItem } from './addNew/addNew.component';
 import { Observable } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { DialogComponent } from './dialog/dialog.component';
+
+export enum Views {
+  Start = 'quickStart',
+  Item = 'items',
+  Category = 'categories',
+  Logout = 'logOut'
+}
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule,CategoriesComponent, ItemsComponent, AddNewComponent, QuickStartComponent, NzButtonModule],
+  imports: [CommonModule,CategoriesComponent, ItemsComponent, DialogComponent, QuickStartComponent, NzButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [InventoryService]
 })
 
-
 export class AppComponent implements OnInit {
   public title = 'Inventory App';
   public itemData: Item[] = [];
   public categoryData: any[]=[];
-  public currentView: string = 'item';
+  public Views = Views; // Make the enum accessible in the template
+  public currentView: Views = Views.Start;
   public showCategory= false;
   public showItem = false;
   public showDialog=false;
@@ -72,7 +80,7 @@ export class AppComponent implements OnInit {
     );
   }
 
-  public onViewChange(view: string) {
+  public onViewChange(view: Views) {
     this.currentView = view;    
   }
 
@@ -90,5 +98,13 @@ export class AppComponent implements OnInit {
 
   public onRemoveItem(itemToRemove: string){
     this.inventoryService.deleteItem(itemToRemove);
+  }
+
+  public onAddBtnClick(){
+    this.showDialog = true;
+  }
+
+  onDialogConfirmed(confirmed: boolean) {
+    this.showDialog = false;
   }
 }

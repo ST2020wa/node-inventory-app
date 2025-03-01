@@ -1,41 +1,42 @@
 <div class="app-container">
   <!-- Header Section -->
   <header class="app-header">
-    <h1 class="title">Inventory Management</h1>
-    <!-- <nav>
-      <a href="#" (click)="showQuickStart=true">Get Started</a>
-      <a href="#" (click)="showCategory=false;showDialog=false">Items</a>
-      <a href="#" (click)="showCategory=true;showDialog=false">Categories</a>
-      <a href="#">Logout</a>
-    </nav> -->
+    <h1 class="title">🗃️ Inventory Management</h1>
     <nav>
-      <a href="#" (click)="onViewChange('quickStart')">Get Started</a>
-      <a href="#" (click)="onViewChange('items')">Items</a>
-      <a href="#" (click)="onViewChange('categories')">Categories</a>
-      <a href="#" (click)="onViewChange('logOut')">Logout</a>
+      <a href="#" (click)="onViewChange(Views.Start)">Get Started</a>
+      <a href="#" (click)="onViewChange(Views.Item)">Items</a>
+      <a href="#" (click)="onViewChange(Views.Category)">Categories</a>
+      <a href="#" (click)="onViewChange(Views.Logout)">Logout</a>
     </nav>
   </header>
   <!-- Main Content Section -->
   <main class="content">
     <div class="card">
       <div class="title-block">
-        <h2 class="card-title">{{currentView==='categories' ? 'Category List' : currentView==='items' ? 'Inventory List' : 'Welcome to Inventory Management!'}}</h2>
-        <button nz-button 
+        <h2 class="card-title">{{currentView===Views.Category ? 'Category List' : currentView===Views.Item ? 'Inventory List' : 'Welcome'}}</h2>
+        <button [hidden]="currentView===Views.Start" nz-button 
         nzType="primary" 
         nzShape="circle" 
-        (click)="showDialog=true"
+        (click)="onAddBtnClick()"
         class="add-button">
   <span nz-icon nzType="plus">+</span>
 </button>
       </div>
       <div class="inventory-items">
-        <app-quickStart *ngIf="currentView==='quickStart'"></app-quickStart>
-        <app-items *ngIf="currentView==='items'" [itemData]="itemData" (itemToHandle)="onRemoveItem($event)"></app-items>
-        <app-categories *ngIf="currentView==='categories'" [categoryData]="categoryData" (categoryToHandle)="onRemoveCategory($event)"></app-categories>
-        <app-quickStart *ngIf="currentView==='quickStart'" [hidden]="!showQuickStart"></app-quickStart>      
+        <app-quickStart *ngIf="currentView===Views.Start"></app-quickStart>
+        <app-items *ngIf="currentView===Views.Item" [itemData]="itemData" (itemToHandle)="onRemoveItem($event)"></app-items>
+        <app-categories *ngIf="currentView===Views.Category" [categoryData]="categoryData" (categoryToHandle)="onRemoveCategory($event)"></app-categories>  
       </div>
     </div>
   </main>
 </div>
 
-<app-addNew [hidden]="!showDialog" [newCategory]="showCategory" [categoryData]="categoryData" (addCategoryEvent)="onAddCategory($event)" (addItemEvent)="onAddItem($event)"></app-addNew>
+<app-dialog 
+  *ngIf="showDialog" 
+  [visible]="showDialog" 
+  [title]="'Add New Item'" 
+  [content]="'Enter the details for the new item.'"
+  [currentView]="currentView"
+  [categoryData]="categoryData" (addCategoryEvent)="onAddCategory($event)" (addItemEvent)="onAddItem($event)"
+  (confirmed)="onDialogConfirmed($event)">
+</app-dialog>
